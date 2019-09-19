@@ -8,12 +8,11 @@ const tokens = require('./secrets.json')
 const web = new WebClient(tokens.oAuthToken);
 (async () => {
 
-    let newChannelName = "lunch-roulette-berlin-6";
-    let roulettPrefix="lunch-roulette'"
+    let newChannelName = "lunch-roulette-berlin-20.09.2019";
+    let roulettPrefix = "lunch-roulette'"
     //archive channels
-
+    console.log('archive channels');
     let channelList = await web.channels.list({
-        "token": tokens.botUserOAuthTokenToken,
         "exclude_archived": true
 
     })
@@ -28,23 +27,20 @@ const web = new WebClient(tokens.oAuthToken);
         }
     })
 
-    //Create new channel
-   await web.channels.create(
+    console.log('Create new channel'+ newChannelName);
+    let result = await web.channels.create(
         {
             "name": newChannelName
         }
     )
-//Inform User
+    console.log('Inform user');
     await web.chat.postMessage(
         {
             "token": tokens.botUserOAuthTokenToken,
             "channel": "lunch-muc",
-            "text": `Hola commercetoolers, the Lunchroulett goes into the next round! Join #${newChannelName} for some fun :all-the-things:!`
+            "text": `Hola <!here> , next Wednesday is lunch roulette day! Join <#${result.channel.id}> for a whole new lunch experience :all-the-things:!`
         }
     );
 
-
-
-
-    console.log('channel  created!');
+    console.log('döner');
 })();
