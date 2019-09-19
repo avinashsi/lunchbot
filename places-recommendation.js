@@ -12,7 +12,7 @@ async function getRestaurantsNearBy() {
     const { json: { results } } = await googleMapsClient.placesNearby({
       language: 'en',
       location: commercetoolsBerlinOfficeLatLon,
-      radius: 1000,
+      radius: 500,
       minprice: 1,
       maxprice: 4,
       opennow: true,
