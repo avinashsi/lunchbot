@@ -1,6 +1,7 @@
 const teamNameGenerator = require('./team-name-generator');
 const topicGenerator = require('./topic-generator');
 const placesRecommender = require('./places-recommendation');
+const _ = require('lodash')
 
 async function startCreatingGroups(web) {
 
@@ -82,16 +83,16 @@ async function createGroupMessage(userList) {
   if (size > 0) {
     const motherArray = chunk(userList, 3, 2);
     for (const realList of motherArray) {
-      messageText += "_Lunch Crew_ *" + teamNameGenerator.generateRandomTeamName() + '* :awesome: :all-the-things: \n';
+      messageText += "Lunch Crew Name: *" + getBetterCrewName() + '* \n\n';
       const randomTopic = await topicGenerator.generateRandomTopic();
 
       messageText += getUserMention(messageText, realList, 0, realList.length) + "\n";
 
-      messageText += 'Did you know that ' + randomTopic + " :scream: :scream: :scream: :interrobang:";
-      messageText += '\n =========================================================== \n';
+      messageText += '\nHere\'s your lunch time topic\n*' + randomTopic + "* :scream:";
+      messageText += '\n \n \n';
     }
 
-    messageText += '\n Here are some restaurants around \n'
+    messageText += '\nHere are some restaurants around\n'
     messageText += await getRestaurantRecommendationsAsText()
 
     return messageText;
@@ -100,13 +101,19 @@ async function createGroupMessage(userList) {
   }
 }
 
+function getBetterCrewName() {
+  let randomName = teamNameGenerator.generateRandomTeamName().replace('-', ' ')
+  return randomName.split(' ')[0][0].toUpperCase() + randomName.split(' ')[0].slice(1) 
+    + ' ' + randomName.split(' ')[1][0].toUpperCase() + randomName.split(' ')[1].slice(1);
+}
+
 async function getRestaurantRecommendationsAsText() {
   let restaurants = await placesRecommender.getRestaurantsNearBy()
 
-  return restaurants
+  return _.shuffle(restaurants)
     .slice(0, 5)
     .map((restaurant, index) => {
-      return (index + 1) + '. ' + restaurant.name + ' - ' + restaurant.vicinity;
+      return (index + 1) + '. ' + '<https://maps.google.com/?q=' + restaurant.vicinity + '|' + restaurant.name + '>';
     }).join("\n");
 }
 
