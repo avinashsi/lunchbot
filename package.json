@@ -12,7 +12,8 @@
   "dependencies": {
     "@slack/events-api": "^2.3.0",
     "@slack/web-api": "^5.1.0",
+    "axios": "^0.19.0",
     "express": "^4.17.1",
-    "axios": "^0.19.0"
+    "moniker": "^0.1.2"
   }
 }
