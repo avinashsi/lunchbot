@@ -35,3 +35,7 @@ async function getRestaurantsNearBy() {
     return "No restaurants nearby.."
   }
 }
+
+module.exports = {
+  getRestaurantsNearBy
+}

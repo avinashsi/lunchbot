@@ -3,6 +3,7 @@
 const fs = require('fs');
 const { WebClient } = require('@slack/web-api');
 const teamNameGenerator = require('./team-name-generator');
+const placesRecommender = require('./places-recommendation');
 console.log('Lunchbot started');
 const tokens = require('./secrets.json')
 
@@ -11,9 +12,21 @@ const web = new WebClient(tokens.oAuthToken);
 
   await notifyAboutNextRouletteInGeneralRoom();
   await sendRandomNameToBerlinRouletter();
+  await sendRestaurantRecommendations();
 
   console.log('Message posted!');
 })();
+
+async function sendRestaurantRecommendations() {
+  let recommendations = placesRecommender.getRestaurantsNearBy();
+
+  return web.chat.postMessage(
+    {
+      "channel": "lunch-roulette-berlin",
+      "text": `Hola <!here> , next Wednesday is lunch roulette day! Join <#CNHQS1NQ5> for a whole new lunch experience :all-the-things:!`
+    }
+  );
+}
 
 async function notifyAboutNextRouletteInGeneralRoom() {
   return web.chat.postMessage(
