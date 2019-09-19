@@ -25,8 +25,8 @@ const web = new WebClient(tokens.botUserOAuthTokenToken);
 (async () => {
 
   await notifyAboutNextRouletteInGeneralRoom();
-  await sendRandomNameToBerlinRouletter();
-  await sendRestaurantRecommendations();
+  //await sendRandomNameToBerlinRouletter();
+  //await sendRestaurantRecommendations();
 
   console.log('Message posted!');
 })();
@@ -82,4 +82,4 @@ async function getChannelInfo() {
 
 
 // groups will be created in 8 seconds
-setTimeout(() => startCreatingGroups(web), 8000);
+//setTimeout(() => startCreatingGroups(web), 8000);
