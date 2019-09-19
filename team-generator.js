@@ -1,5 +1,6 @@
 const teamNameGenerator = require('./team-name-generator');
 const topicGenerator = require('./topic-generator');
+const placesRecommender = require('./places-recommendation');
 
 async function startCreatingGroups(web) {
 
@@ -7,7 +8,7 @@ async function startCreatingGroups(web) {
   const channelID = 'CNJKD4D4P'
   let result;
   try {
-    result = await web.apiCall('conversations.members', {channel: channelID})
+    result = await web.apiCall('conversations.members', { channel: channelID })
   } catch (err) {
     console.log(err);
     console.log('Channel for lunchbot is not available! :disappointed')
@@ -18,16 +19,16 @@ async function startCreatingGroups(web) {
 
   try {
     const promises = membersArray.map(element => {
-      return web.apiCall('users.info', {user: element})
-          .then(res => {
-            const userObj = {
-              id: res.user.id,
-              slackName: res.user.name,
-              realName: res.user.real_name,
-              email: res.user.profile.email
-            }
-            return userObj;
-          });
+      return web.apiCall('users.info', { user: element })
+        .then(res => {
+          const userObj = {
+            id: res.user.id,
+            slackName: res.user.name,
+            realName: res.user.real_name,
+            email: res.user.profile.email
+          }
+          return userObj;
+        });
     });
 
     const values = await Promise.all(promises)
@@ -35,24 +36,24 @@ async function startCreatingGroups(web) {
     const groupMessage = await createGroupMessage(values);
 
     await web.chat.postMessage(
-        {
-          "channel": "lunch-muc",
-          "text": groupMessage
-        }
+      {
+        "channel": "lunch-muc",
+        "text": groupMessage
+      }
     );
 
   } catch (err) {
     console.log(err);
     console.log('Channel could not found. May be the channel with ID : ' + channelID +
-        ' has deleted.')
+      ' has deleted.')
   }
 }
 
 function chunk(arr, size, min) {
   const chunks = arr.reduce(
-      (chunks, el, i) =>
-          (i % size ? chunks[chunks.length - 1].push(el) : chunks.push([el])) && chunks,
-      []
+    (chunks, el, i) =>
+      (i % size ? chunks[chunks.length - 1].push(el) : chunks.push([el])) && chunks,
+    []
   );
   const l = chunks.length;
 
@@ -83,21 +84,34 @@ async function createGroupMessage(userList) {
       messageText += "Lunch Crew " + teamNameGenerator.generateRandomTeamName() + '\n';
       const randomTopic = await topicGenerator.generateRandomTopic();
 
-      messageText += getUserMention(messageText, realList, 0, realList.length) +"\n";
+      messageText += getUserMention(messageText, realList, 0, realList.length) + "\n";
 
       messageText += 'Did you know that ' + randomTopic + " :scream: ";
       messageText += '\n =========================================================== \n';
     }
+
+    messageText += '\n Here are some restaurants around \n'
+    messageText += await getRestaurantRecommendationsAsText()
+
     return messageText;
   } else {
     return 'Sorry, not enough people :disappointed :disappointed :disappointed';
   }
+}
 
+async function getRestaurantRecommendationsAsText() {
+  let restaurants = await placesRecommender.getRestaurantsNearBy()
+
+  return restaurants
+    .slice(0, 5)
+    .map((restaurant, index) => {
+      return (index + 1) + '. ' + restaurant.name + ' - ' + restaurant.vicinity;
+    }).join("\n");
 }
 
 function getUserMention(message, array, from, to) {
   return array.map((user, i) => {
-    return (i+1) + '. <@' + user.id + '>';
+    return (i + 1) + '. <@' + user.id + '>';
   }).join("\n");
 }
 
@@ -130,4 +144,4 @@ function shuffleArray(array) {
 }
 
 
-module.exports = {startCreatingGroups};
+module.exports = { startCreatingGroups };
