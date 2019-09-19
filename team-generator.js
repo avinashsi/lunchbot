@@ -5,7 +5,7 @@ const _ = require('lodash')
 
 async function startCreatingGroups(web, channelId) {
 
-  
+
   let result;
   try {
     result = await web.apiCall('conversations.members', { channel: channelId })
@@ -51,6 +51,8 @@ async function startCreatingGroups(web, channelId) {
 }
 
 function chunk(arr, size, min) {
+  if (arr.length < min)
+    return arr
   const chunks = arr.reduce(
     (chunks, el, i) =>
       (i % size ? chunks[chunks.length - 1].push(el) : chunks.push([el])) && chunks,
@@ -101,7 +103,7 @@ async function createGroupMessage(userList) {
 
 function getBetterCrewName() {
   let randomName = teamNameGenerator.generateRandomTeamName().replace('-', ' ')
-  return randomName.split(' ')[0][0].toUpperCase() + randomName.split(' ')[0].slice(1) 
+  return randomName.split(' ')[0][0].toUpperCase() + randomName.split(' ')[0].slice(1)
     + ' ' + randomName.split(' ')[1][0].toUpperCase() + randomName.split(' ')[1].slice(1);
 }
 
