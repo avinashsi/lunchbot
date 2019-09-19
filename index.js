@@ -20,7 +20,7 @@ const web = new WebClient(token);
     await web.chat.postMessage(
         {
             "channel": "lunch-muc",
-            "text": `Hola commercetoolers, on Wednesday is lunch roulette time! Join ${newChannelName}
+            "text": `Hola commercetoolers, next Wednesday is lunch roulette time! Join ${newChannelName}
              for all the fun :all-the-things:!`
         }
     );
