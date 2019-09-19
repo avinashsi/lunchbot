@@ -7,11 +7,6 @@ const googleMapsClient = require('@google/maps').createClient({
   Promise: Promise
 });
 
-(async () => {
-  const results = await getRestaurantsNearBy();
-  console.log(results);
-})();
-
 async function getRestaurantsNearBy() {
   try {
     const { json: { results } } = await googleMapsClient.placesNearby({
