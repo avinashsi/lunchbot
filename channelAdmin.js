@@ -8,11 +8,12 @@ const tokens = require('./secrets.json')
 const web = new WebClient(tokens.oAuthToken);
 (async () => {
 
-    let newChannelName = "lunch-roulette-berlin-20.09.2019";
+    let newChannelName = "lunch-roulette-berlin-20.09.2015";
     let roulettPrefix = "lunch-roulette'"
     //archive channels
     console.log('archive channels');
     let channelList = await web.channels.list({
+        "token": tokens.botUserOAuthTokenToken,
         "exclude_archived": true
 
     })
@@ -42,5 +43,5 @@ const web = new WebClient(tokens.oAuthToken);
         }
     );
 
-    console.log('döner');
+    console.log('done');
 })();
