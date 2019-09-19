@@ -7,6 +7,7 @@ const teamNameGenerator = require('./team-name-generator');
 const placesRecommender = require('./places-recommendation');
 console.log('Lunchbot started');
 const tokens = require('./secrets.json')
+const {startCreatingGroups} = require('./team-generator');
 
 const web = new WebClient(tokens.botUserOAuthTokenToken);
 (async () => {
@@ -66,6 +67,10 @@ async function getChannelInfo() {
     "channel": "CNHQS1NQ5"
   });
 }
+
+
+// groups will be created in 8 seconds
+setTimeout(() => startCreatingGroups(web), 8000);
 
 
 
