@@ -3,13 +3,12 @@ const topicGenerator = require('./topic-generator');
 const placesRecommender = require('./places-recommendation');
 const _ = require('lodash')
 
-async function startCreatingGroups(web) {
+async function startCreatingGroups(web, channelId) {
 
-  // channel ID  CNJKD4D4P
-  const channelID = 'CNJKD4D4P'
+  
   let result;
   try {
-    result = await web.apiCall('conversations.members', { channel: channelID })
+    result = await web.apiCall('conversations.members', { channel: channelId })
   } catch (err) {
     console.log(err);
     console.log('Channel for lunchbot is not available! :disappointed')
@@ -38,7 +37,7 @@ async function startCreatingGroups(web) {
 
     await web.chat.postMessage(
         {
-          "channel": "lunch-muc",
+          "channel": channelId,
           "mrkdwn": true,
           "text": groupMessage
         }
@@ -46,7 +45,7 @@ async function startCreatingGroups(web) {
 
   } catch (err) {
     console.log(err);
-    console.log('Channel could not found. May be the channel with ID : ' + channelID +
+    console.log('Channel could not found. May be the channel with ID : ' + channelId +
       ' has deleted.')
   }
 }
@@ -74,14 +73,13 @@ function chunk(arr, size, min) {
 
 async function createGroupMessage(userList) {
 
-  removeBotUser(userList);
   shuffleArray(userList);
 
   let messageText = "";
   let size = userList.length;
 
   if (size > 0) {
-    const motherArray = chunk(userList, 3, 2);
+    const motherArray = chunk(userList, 5, 3);
     for (const realList of motherArray) {
       messageText += "Lunch Crew Name: *" + getBetterCrewName() + '* \n\n';
       const randomTopic = await topicGenerator.generateRandomTopic();

@@ -1,34 +1,30 @@
 'use strict';
 
 const fs = require('fs');
-const {WebClient} = require('@slack/web-api');
+const { WebClient } = require('@slack/web-api');
 console.log('Lunchbot started');
 const tokens = require('./secrets.json')
 
 const web = new WebClient(tokens.oAuthToken);
-(async () => {
+async function createChannelAndNotify (newChannelName) {
 
-    let newChannelName = "lunch-roulette-berlin-20.09.2015";
-    let roulettPrefix = "lunch-roulette'"
     //archive channels
     console.log('archive channels');
     let channelList = await web.channels.list({
         "token": tokens.botUserOAuthTokenToken,
         "exclude_archived": true
-
     })
     channelList.channels.forEach(function (channel) {
         if (channel.name.includes('lunch-roulette')) {
             web.channels.archive(
                 {
                     "channel": channel.id,
-
                 }
             )
         }
     })
 
-    console.log('Create new channel'+ newChannelName);
+    console.log('Create new channel' + newChannelName);
     let result = await web.channels.create(
         {
             "name": newChannelName
@@ -39,9 +35,11 @@ const web = new WebClient(tokens.oAuthToken);
         {
             "token": tokens.botUserOAuthTokenToken,
             "channel": "lunch-muc",
-            "text": `Hola <!here> , next Wednesday is lunch roulette day! Join <#${result.channel.id}> for a whole new lunch experience :all-the-things:!`
+            "text": `Hola chicos and habibis <!here> , this Wednesday is lunch roulette day! Join <#${result.channel.id}> for a whole new lunch experience :all-the-things:!`
         }
     );
 
-    console.log('done');
-})();
+    return result.channel.id
+}
+
+module.exports = { createChannelAndNotify }
