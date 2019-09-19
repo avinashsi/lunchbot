@@ -2,23 +2,38 @@
 
 const fs = require('fs');
 const { WebClient } = require('@slack/web-api');
+const _ = require('lodash')
 const teamNameGenerator = require('./team-name-generator');
+const placesRecommender = require('./places-recommendation');
 console.log('Lunchbot started');
 const tokens = require('./secrets.json')
 
-const web = new WebClient(tokens.oAuthToken);
+const web = new WebClient(tokens.botUserOAuthTokenToken);
 (async () => {
 
   await notifyAboutNextRouletteInGeneralRoom();
   await sendRandomNameToBerlinRouletter();
+  await sendRestaurantRecommendations();
 
   console.log('Message posted!');
 })();
 
+async function sendRestaurantRecommendations() {
+  let restaurantsNearby = await placesRecommender.getRestaurantsNearBy()
+  let recommendations = _.shuffle(restaurantsNearby);
+
+  return web.chat.postMessage(
+    {
+      "channel": "summerhack-lunchbot",
+      "text": `Yo yo, restaurants recommendations are here: ${JSON.stringify(recommendations)}!`
+    }
+  );
+}
+
 async function notifyAboutNextRouletteInGeneralRoom() {
   return web.chat.postMessage(
     {
-      "channel": "lunch-roulette-berlin",
+      "channel": "summerhack-lunchbot",
       "text": `Hola <!here> , next Wednesday is lunch roulette day! Join <#CNHQS1NQ5> for a whole new lunch experience :all-the-things:!`
     }
   );
@@ -27,7 +42,7 @@ async function notifyAboutNextRouletteInGeneralRoom() {
 async function sendRandomNameToBerlinRouletter() {
   return web.chat.postMessage(
     {
-      "channel": "lunch-roulette-berlin",
+      "channel": "summerhack-lunchbot",
       "text": `Here is a random team name: ${teamNameGenerator.generateRandomTeamName()}`
     }
   );
