@@ -8,32 +8,42 @@ const tokens = require('./secrets.json')
 const web = new WebClient(tokens.oAuthToken);
 (async () => {
 
-    //await web.chat.postMessage(JSON.parse(fs.readFileSync('message.json')));
-    let channelRouletteBerlinID = "CNHQS1NQ5";
-    let channelInfo = await web.channels.info(
-        {
-            "channel": channelRouletteBerlinID
-        })
+    let newChannelName = "lunch-roulette-berlin-6";
+    let roulettPrefix="lunch-roulette'"
+    //archive channels
 
-    let allUsersInChannel = channelInfo.channel.members;
-    //await web.chat.postMessage(JSON.parse(fs.readFileSync('message.json')));
-    allUsersInChannel.forEach(function (user) {
-        web.channels.kick(
-            {
-                "channel": channelRouletteBerlinID,
-                "user": user.id
-            }
-        )
+    let channelList = await web.channels.list({
+        "token": tokens.botUserOAuthTokenToken,
+        "exclude_archived": true
 
     })
-    //set topic
+    channelList.channels.forEach(function (channel) {
+        if (channel.name.includes('lunch-roulette')) {
+            web.channels.archive(
+                {
+                    "channel": channel.id,
 
-    await web.channels.setTopic(
+                }
+            )
+        }
+    })
+
+    //Create new channel
+   await web.channels.create(
         {
-            "channel": channelRouletteBerlinID,
-            "topic": 'new toppppic'
+            "name": newChannelName
         }
     )
+//Inform User
+    await web.chat.postMessage(
+        {
+            "token": tokens.botUserOAuthTokenToken,
+            "channel": "lunch-muc",
+            "text": `Hola commercetoolers, the Lunchroulett goes into the next round! Join #${newChannelName} for some fun :all-the-things:!`
+        }
+    );
+
+
 
 
     console.log('channel  created!');
