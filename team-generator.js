@@ -36,10 +36,11 @@ async function startCreatingGroups(web) {
     const groupMessage = await createGroupMessage(values);
 
     await web.chat.postMessage(
-      {
-        "channel": "lunch-muc",
-        "text": groupMessage
-      }
+        {
+          "channel": "lunch-muc",
+          "mrkdwn": true,
+          "text": groupMessage
+        }
     );
 
   } catch (err) {
@@ -81,12 +82,12 @@ async function createGroupMessage(userList) {
   if (size > 0) {
     const motherArray = chunk(userList, 3, 2);
     for (const realList of motherArray) {
-      messageText += "Lunch Crew " + teamNameGenerator.generateRandomTeamName() + '\n';
+      messageText += "_Lunch Crew_ *" + teamNameGenerator.generateRandomTeamName() + '* :awesome: :all-the-things: \n';
       const randomTopic = await topicGenerator.generateRandomTopic();
 
       messageText += getUserMention(messageText, realList, 0, realList.length) + "\n";
 
-      messageText += 'Did you know that ' + randomTopic + " :scream: ";
+      messageText += 'Did you know that ' + randomTopic + " :scream: :scream: :scream: :interrobang:";
       messageText += '\n =========================================================== \n';
     }
 
