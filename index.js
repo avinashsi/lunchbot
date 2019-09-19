@@ -3,9 +3,9 @@
 const fs = require('fs');
 const {WebClient} = require('@slack/web-api');
 console.log('Lunchbot started');
-const token = 'xoxb-104881736709-751955583666-EpdSCfh2PLfqvMKKeIYXoM1O';
+const tokens = require('./secrets.json')
 
-const web = new WebClient(token);
+const web = new WebClient(tokens.oAuthToken);
 (async () => {
 
     //await web.chat.postMessage(JSON.parse(fs.readFileSync('message.json')));
