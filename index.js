@@ -20,8 +20,8 @@ const web = new WebClient(tokens.oAuthToken);
     await web.chat.postMessage(
         {
             "channel": "lunch-muc",
-            "text": `Hola commercetoolers, on Wednesday is lunch roulette time! Join ${newChannelName}
-             for all the fun :all-the-things:!`
+            "text": `Hola commercetoolers, next Wednesday is lunch roulette day! Join ${newChannelName}
+             for some fun :all-the-things:!`
         }
     );
 
