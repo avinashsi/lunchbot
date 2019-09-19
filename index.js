@@ -1,20 +1,29 @@
-const { WebClient } = require('@slack/web-api');
+'use strict';
+
+const fs = require('fs');
+const {WebClient} = require('@slack/web-api');
 console.log('Lunchbot started');
-const token = 'your-commit';
-// Create a new instance of the WebClient class with the token read from your environment variable
+const token = 'xoxb-104881736709-751955583666-EpdSCfh2PLfqvMKKeIYXoM1O';
+
 const web = new WebClient(token);
-// The current date
-const currentTime = new Date().toTimeString();
 (async () => {
-  // Use the `auth.test` method to find information about the installing user
-  const res = await web.auth.test()
-  // Find your user id to know where to send messages to
-  const userId = res.user_id
-  const { user: andi } = await web.users.lookupByEmail({ email: "your.email@commercetools.de" });
-// Use the `chat.postMessage` method to send a message from this app
-  await web.chat.postMessage({
-      channel: andi.id,
-      text: `Hello from bot. The current time is ${currentTime}`,
-    });
-  console.log('Message posted!');
+
+    //await web.chat.postMessage(JSON.parse(fs.readFileSync('message.json')));
+
+    let newChannelName = "lunch-roulette-berlin-25.9.2019";
+    await web.channels.create(
+        {
+            "name": newChannelName
+        }
+    )
+
+    await web.chat.postMessage(
+        {
+            "channel": "lunch-muc",
+            "text": `Hola commercetoolers, on Wednesday is lunch roulette time! Join ${newChannelName}
+             for all the fun :all-the-things:!`
+        }
+    );
+
+    console.log('Message posted!');
 })();
