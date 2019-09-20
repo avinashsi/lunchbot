@@ -71,7 +71,7 @@ function chunk(arr, size, min) {
   }
 
   return chunks;
-};
+}
 
 async function createGroupMessage(userList) {
 
