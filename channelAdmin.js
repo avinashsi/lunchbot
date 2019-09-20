@@ -43,7 +43,7 @@ async function createChannelAndNotify (newChannelName) {
         {
             "token": tokens.botUserOAuthTokenToken,
             "channel": "lunch-muc",
-            "text": `Hola chicos and habibis <!here> , this Wednesday is lunch roulette day! Join <#${result.channel.id}> for a whole new lunch experience :all-the-things:!`
+            "text": `Hola chicos and habibis <!here>, this Wednesday is lunch roulette day! Join <#${result.channel.id}> for a whole new lunch experience :all-the-things:!`
         }
     );
 
