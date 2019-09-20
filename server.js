@@ -1,6 +1,6 @@
 'use strict';
 
-const fs = require('fs');
+const moment = require('moment');
 const { WebClient } = require('@slack/web-api');
 const _ = require('lodash')
 console.log('Lunchbot started');
@@ -23,9 +23,9 @@ app.get('/', (req, res) => {
 const web = new WebClient(tokens.botUserOAuthTokenToken);
 (async () => {
 
-  const newChannelName = "lunch-roulette-berlin-" + new Date().toTimeString()
-  
+  const newChannelName = "Lunch roulette Berlin " + moment().format("DD.MM.YYYY HH:mm")
+
   const channelId = await createChannelAndNotify(newChannelName)
-  setTimeout(() => startCreatingGroups(web, channelId), 30 * 1000)
+  setTimeout(() => startCreatingGroups(web, channelId), 120 * 1000)
 
 })();
