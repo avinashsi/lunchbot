@@ -30,6 +30,14 @@ async function createChannelAndNotify (newChannelName) {
             "name": newChannelName
         }
     )
+    await web.channels.setTopic(
+        {
+            "channel": result.channel.id,
+            "topic" : "Hey lovely commercetoolers. It's lunch roulette time again: Go for lunch with people you are normally not and get to know each other."
+        }
+    )
+
+
     console.log('Inform user');
     await web.chat.postMessage(
         {
