@@ -25,16 +25,16 @@
         "Welcome to Lunch Roulette - this will change your life!"
     ],
     "all": [
-        "That's the spirit cutie pie <@${ username }>!",
-        "That's the spirit cutie pie! By the way, you look sexy today, <@${ username }>...",
-        "Awwww <@${ username }>😍",
-        "Hola guapa <@${ username }>. Tienes hambre?",
-        "Hey my little lovebird - I missed you already 💚",
+        "That's the spirit cutie pie <@${ username }> !",
+        "That's the spirit cutie pie! By the way, you look sexy today, <@${ username }> ...",
+        "Awwww <@${ username }> 😍",
+        "Hola guapa <@${ username }> . Tienes hambre?",
+        "Hey my little lovebird, <@${ username }> - I missed you already 💚",
         "Uh lala - nice to see you today, <@${ username }>",
-        "Willkommen Banause!",
-        "Honey - lunch will be served on Wednesday. ",
-        "Winter is coming, so welcome to the heartwarming Lunch Roulette",
-        "Welcome to Lunch Roulette - this will change your life!"
+        "Willkommen, <@${ username }> Banause!",
+        "<@${ username }> , honey - lunch will be served on Wednesday. ",
+        "Winter is coming, so welcome to the heartwarming Lunch Roulette <@${ username }>",
+        "Welcome to Lunch Roulette - this will change your life, <@${ username }> !"
     ],
     "gifs": [
         "https://media.giphy.com/media/npY5Jqcr7kBhDaQTjq/giphy.gif",

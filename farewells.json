@@ -3,19 +3,22 @@
         "Did you hear the crack <@${ username }>, My heart is breaking... 💔",
         "Do you hear me crying, <@${ username }>?",
         "Seriously, that's the way to tell me you are breaking up <@${ username }>?",
-        "You're breaking up with me <@${ username }>?"
+        "You're breaking up with me <@${ username }>?",
+        "Asta la vista chico <@${ username }>"
     ],
     "sales": [
         "Did you hear the crack <@${ username }>, My heart is breaking... 💔",
         "Do you hear me crying, <@${ username }>?",
         "Seriously, that's the way to tell me you are breaking up <@${ username }>?",
-        "You're breaking up with me <@${ username }>?"
+        "You're breaking up with me <@${ username }>?",
+        "Asta la vista chico <@${ username }>"
     ],
     "all": [
         "Did you hear the crack <@${ username }>, My heart is breaking... 💔",
         "Do you hear me crying, <@${ username }>?",
         "Seriously, that's the way to tell me you are breaking up <@${ username }>?",
-        "You're breaking up with me <@${ username }>?"
+        "You're breaking up with me <@${ username }>?",
+        "Asta la vista chico <@${ username }>"
     ],
     "gifs": [
         "https://media.giphy.com/media/YqoQ9wgKBCNVe/giphy.gif",
