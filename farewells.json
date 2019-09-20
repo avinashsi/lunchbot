@@ -1,0 +1,36 @@
+{
+    "dev": [
+        "Did you hear the crack ${username}, My heart is breaking... 💔",
+        "Do you hear me crying, ${username}?",
+        "Seriously, that's the way to tell me you are breaking up ${username}?",
+        "You're breaking up with me ${username}?"
+    ],
+    "sales": [
+        "Did you hear the crack ${username}, My heart is breaking... 💔",
+        "Do you hear me crying, ${username}?",
+        "Seriously, that's the way to tell me you are breaking up ${username}?",
+        "You're breaking up with me ${username}?"
+    ],
+    "all": [
+        "Did you hear the crack ${username}, My heart is breaking... 💔",
+        "Do you hear me crying, ${username}?",
+        "Seriously, that's the way to tell me you are breaking up ${username}?",
+        "You're breaking up with me ${username}?"
+    ],
+    "gifs": [
+        "https://media.giphy.com/media/YqoQ9wgKBCNVe/giphy.gif",
+        "https://media.giphy.com/media/o0eprVBxfRnbi/giphy.gif",
+        "https://media.giphy.com/media/3ov9jWgOYIJ9k5Elyw/giphy.gif",
+        "https://media.giphy.com/media/T6bAZMMtEfDVK/giphy.gif",
+        "https://media.giphy.com/media/3o7WIvaSKdMaboHF4s/giphy.gif",
+        "https://media.giphy.com/media/Fg2s9nwj4LMhW/giphy.gif",
+        "https://media.giphy.com/media/l2XbJoq24l4NW/giphy.gif",
+        "https://media.giphy.com/media/YnBntKOgnUSBkV7bQH/giphy.gif",
+        "https://media.giphy.com/media/eM16dA4eiatuyUs3rA/giphy.gif",
+        "http://giphygifs.s3.amazonaws.com/media/HUYuP6rm54Eda/giphy.gif",
+        "https://media.giphy.com/media/ZQhjF1V76kiFG/giphy.gif",
+        "https://media.giphy.com/media/RiiIImVSYLD7rWrkq9/giphy.gif"
+    ]
+}
+
+

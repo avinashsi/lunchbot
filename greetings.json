@@ -1,0 +1,51 @@
+{
+    "dev": [
+        "That's the spirit cutie pie ${username}!",
+        "That's the spirit cutie pie! By the way, you look sexy today, ${username}...",
+        "Awwww ${username}😍",
+        "Hola guapa ${username}. Tienes hambre?",
+        "Hey my little lovebird - I missed you already 💚",
+        "Uh lala - nice to see you today, ${username}",
+        "Willkommen Banause!",
+        "Honey - lunch will be served on Wednesday. ",
+        "Stop coding, ${username}. Time to eat! - Welcome to the Lunch Roulette",
+        "Winter is coming, so welcome to the heartwarming Lunch Roulette",
+        "Welcome to Lunch Roulette - this will change your life!"
+    ],
+    "sales": [
+        "That's the spirit cutie pie ${username}!",
+        "That's the spirit cutie pie! By the way, you look sexy today, ${username}...",
+        "Awwww ${username}😍",
+        "Hola guapa ${username}. Tienes hambre?",
+        "Hey my little lovebird - I missed you already 💚",
+        "Uh lala - nice to see you today, ${username}",
+        "Willkommen Banause!",
+        "Honey - lunch will be served on Wednesday. ",
+        "Winter is coming, so welcome to the heartwarming Lunch Roulette",
+        "Welcome to Lunch Roulette - this will change your life!"
+    ],
+    "all": [
+        "That's the spirit cutie pie ${username}!",
+        "That's the spirit cutie pie! By the way, you look sexy today, ${username}...",
+        "Awwww ${username}😍",
+        "Hola guapa ${username}. Tienes hambre?",
+        "Hey my little lovebird - I missed you already 💚",
+        "Uh lala - nice to see you today, ${username}",
+        "Willkommen Banause!",
+        "Honey - lunch will be served on Wednesday. ",
+        "Winter is coming, so welcome to the heartwarming Lunch Roulette",
+        "Welcome to Lunch Roulette - this will change your life!"
+    ],
+    "gifs": [
+        "https://media.giphy.com/media/npY5Jqcr7kBhDaQTjq/giphy.gif",
+        "https://media.giphy.com/media/xT0xeqODeSirSedO36/giphy.gif",
+        "https://media.giphy.com/media/D5fjAyK7uDmP6/giphy.gif",
+        "https://media.giphy.com/media/elu4ukNRf6dwz2LaGr/giphy.gif",
+        "https://media.giphy.com/media/Fgp6ZgZM1oeOs/giphy.gif",
+        "https://media.giphy.com/media/Y4z1FwC1eQ65SuMGau/giphy.gif",
+        "https://media.giphy.com/media/YnBntKOgnUSBkV7bQH/giphy.gif",
+        "https://media.giphy.com/media/f6VfCFyOL5KmiICskp/giphy.gif",
+        "https://media.giphy.com/media/xUOxfgmXP3EUTK4EPC/giphy.gif",
+        "https://media.giphy.com/media/FxuaSvsgMGzKw/giphy.gif"
+    ]
+}
