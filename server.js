@@ -7,6 +7,8 @@ console.log('Lunchbot started');
 const tokens = require('./secrets.json')
 const {startCreatingGroups} = require('./team-generator');
 const {createChannelAndNotify} = require('./channelAdmin')
+const greetings = require('./greetings.json')
+const farewells = require('./farewells.json')
 
 const { createEventAdapter } = require('@slack/events-api');
 const slackEvents = createEventAdapter(tokens.signingSecret);
@@ -34,14 +36,33 @@ app.get('/', (req, res) => {
   res.status(200).send('Hello, world!');
 });
 
+slackEvents.on('message', (event) => {
+  console.log(`Received a message event: user ${event.user} in channel ${event.channel} says ${event.text}`);
+});
 
 slackEvents.on('member_joined_channel', async (event) => {
   if (channelId === event.channel) {
+    const greetingMesssageTpl = _.template(_.shuffle(greetings.all)[0])
+    const greetingMesssage = greetingMesssageTpl({username: event.user})
     await web.chat.postMessage(
       {
         "channel": channelId,
         "mrkdwn": true,
-        "text": `Hola chico <@${event.user}>`
+        "text": greetingMesssage
+      }
+    );
+  }
+})
+
+slackEvents.on('member_left_channel', async (event) => {
+  if (channelId === event.channel) {
+    const farewellMesssageTpl = _.template(_.shuffle(farewells.all)[0])
+    const farewellMesssage = farewellMesssageTpl({username: event.user})
+    await web.chat.postMessage(
+      {
+        "channel": channelId,
+        "mrkdwn": true,
+        "text": farewellMesssage
       }
     );
   }
@@ -53,3 +74,5 @@ slackEvents.on('error', console.error);
 app.use('/slack/events', slackEvents.expressMiddleware());
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+
+
