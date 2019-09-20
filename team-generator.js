@@ -52,7 +52,7 @@ async function startCreatingGroups(web, channelId) {
 
 function chunk(arr, size, min) {
   if (arr.length < min)
-    return arr
+    return [arr]
   const chunks = arr.reduce(
     (chunks, el, i) =>
       (i % size ? chunks[chunks.length - 1].push(el) : chunks.push([el])) && chunks,
