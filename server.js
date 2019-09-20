@@ -42,8 +42,10 @@ slackEvents.on('message', (event) => {
 
 slackEvents.on('member_joined_channel', async (event) => {
   if (channelId === event.channel) {
-    const greetingMesssageTpl = _.template(_.shuffle(greetings.all)[0])
-    const greetingMesssage = greetingMesssageTpl({username: event.user})
+
+    const gif = _.shuffle(greetings.gifs)[0]
+    const greetingMesssageTpl = _.template(_.shuffle(greetings.all)[0]) 
+    const greetingMesssage = greetingMesssageTpl({username: event.user}) + ' ' + gif
     await web.chat.postMessage(
       {
         "channel": channelId,
@@ -56,8 +58,9 @@ slackEvents.on('member_joined_channel', async (event) => {
 
 slackEvents.on('member_left_channel', async (event) => {
   if (channelId === event.channel) {
+    const gif = _.shuffle(farewells.gifs)[0]
     const farewellMesssageTpl = _.template(_.shuffle(farewells.all)[0])
-    const farewellMesssage = farewellMesssageTpl({username: event.user})
+    const farewellMesssage = farewellMesssageTpl({username: event.user}) + ' ' + gif
     await web.chat.postMessage(
       {
         "channel": channelId,
