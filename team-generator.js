@@ -81,7 +81,7 @@ async function createGroupMessage(userList) {
   let size = userList.length;
 
   if (size > 0) {
-    const motherArray = chunk(userList, 5, 3);
+    const motherArray = chunk(userList, 3, 3);
     for (const realList of motherArray) {
       messageText += "Lunch Crew Name: *" + getBetterCrewName() + '* \n\n';
       const randomTopic = await topicGenerator.generateRandomTopic();
