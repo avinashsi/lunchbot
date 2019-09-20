@@ -114,7 +114,7 @@ async function getRestaurantRecommendationsAsText() {
     .slice(0, 5)
     .map((restaurant, index) => {
       return (index + 1) + '. ' + '<https://maps.google.com/?q=' + restaurant.vicinity + '|' + restaurant.name + '>';
-    }).join("\n");
+    }).join("\n") + '\n *6. Too fat? maybe cook something.. or Netto? or just go for a run!*';
 }
 
 function getUserMention(message, array, from, to) {

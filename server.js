@@ -9,6 +9,7 @@ const {startCreatingGroups} = require('./team-generator');
 const {createChannelAndNotify} = require('./channelAdmin')
 const greetings = require('./greetings.json')
 const farewells = require('./farewells.json')
+const botResponse = require('./bot-responses')
 
 const { createEventAdapter } = require('@slack/events-api');
 const slackEvents = createEventAdapter(tokens.signingSecret);
@@ -40,11 +41,22 @@ slackEvents.on('message', (event) => {
   console.log(`Received a message event: user ${event.user} in channel ${event.channel} says ${event.text}`);
 });
 
+slackEvents.on('app_mention', async (event) => {
+  const message = _.shuffle(botResponse)[0]
+  await web.chat.postMessage(
+    {
+      "channel": event.channel,
+      "mrkdwn": true,
+      "text": `${message} <@${event.user}>`
+    }
+  );
+})
+
 slackEvents.on('member_joined_channel', async (event) => {
   if (channelId === event.channel) {
 
     const gif = _.shuffle(greetings.gifs)[0]
-    const greetingMesssageTpl = _.template(_.shuffle(greetings.all)[0]) 
+    const greetingMesssageTpl = _.template(_.shuffle(greetings.all)[0])
     const greetingMesssage = greetingMesssageTpl({username: event.user}) + ' ' + gif
     await web.chat.postMessage(
       {
