@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Lunchbot</title>
+    </head>
+    <body>
+        <h1>Lunchbot</h1>
+
+        <% if(cronJobs.length > 0) { %>
+            <ul>
+                <% for(var i=0; i<cronJobs.length; i++) {%>
+                <li>
+                    <span><%= cronJobs[i].name %></span>
+                    <span>(<%= cronJobs[i].nextInvocation() %>)</span>
+                    <form action="/cancel-cron" style="display: inline;" method="post">
+                        <input type="hidden" name="cronJobOrder" value="<%= i %>"/>
+                        <input type="submit" value="Cancel"/>
+                    </form>
+                </li>
+                <% } %>
+            </ul>
+        <% } %>
+        <h4>Set up lunchbot</h4>
+        <p>
+            When the time in cron is reached, it will create a new slack room and invite people to it.
+            2 hours after creating the room, it will create lunch groups.
+        </p>
+        <form method="post" action="/create-cron">
+            <label>Name of a Slack channel to announce the lunch channel creation:
+            <input type="text" name="channelNameToInform" value="lunch-muc" autofocus="autofocus"/>
+            </label><br/>
+
+            <label>Cron (default "At 11:00 on Wednesday"):
+                <input type="text" name="cronExpression" value="0 11 * * WED"/>
+            </label>
+            <br/>
+
+            <input type="submit" value="Set up"/>
+        </form>
+    </body>
+</html>

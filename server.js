@@ -1,41 +1,63 @@
 'use strict';
 
 const moment = require('moment');
-const { WebClient } = require('@slack/web-api');
+const {WebClient} = require('@slack/web-api');
 const _ = require('lodash')
-console.log('Lunchbot started');
-const tokens = require('./secrets.json')
+const appConfig = require('./app-config')
 const {startCreatingGroups} = require('./team-generator');
 const {createChannelAndNotify} = require('./channelAdmin')
 const greetings = require('./greetings.json')
 const farewells = require('./farewells.json')
 const botResponse = require('./bot-responses')
+const express = require('express');
+const bodyParser = require('body-parser');
+const schedule = require('node-schedule');
+const basicAuth = require('express-basic-auth');
 
-const { createEventAdapter } = require('@slack/events-api');
-const slackEvents = createEventAdapter(tokens.signingSecret);
-
+const {createEventAdapter} = require('@slack/events-api');
+const web = new WebClient(appConfig.botUserOAuthTokenToken);
 
 let channelId
-const express = require('express');
+const cronJobs = []
 const app = express();
 const port = 3000
 
-const web = new WebClient(tokens.botUserOAuthTokenToken);
-(async () => {
+const slackEvents = createEventAdapter(appConfig.signingSecret);
+app.use('/slack/events', slackEvents.expressMiddleware());
+app.use(bodyParser.urlencoded({extended: true}));
+if (appConfig.basicAuthPassword) {
+  app.use(basicAuth({
+    users: {[appConfig.basicAuthUser]: appConfig.basicAuthPassword},
+    challenge: true
+  }))
+}
+app.set('view engine', 'ejs');
 
-  const newChannelName = "Lunch roulette Berlin " + moment().format("DD.MM.YYYY HH:mm")
-
-  channelId = await createChannelAndNotify(newChannelName)
-  setTimeout(() => startCreatingGroups(web, channelId), 120 * 1000)
-
-})();
-
-
-// [START hello_world]
-// Say hello!
 app.get('/', (req, res) => {
-  res.status(200).send('Hello, world!');
+  const jobs = schedule.scheduleJobs
+  res.render('index', {cronJobs})
 });
+
+app.post('/create-cron', (req, res) => {
+  const cronExpression = req.body.cronExpression
+  const channelNameToInform = req.body.channelNameToInform
+  if (cronExpression && channelNameToInform) {
+    const cron = schedule.scheduleJob(cronExpression, async () => {
+      const newChannelName = "Lunch roulette Berlin " + moment().format("DD.MM.YYYY");
+      channelId = await createChannelAndNotify(channelNameToInform, newChannelName);
+      setTimeout(() => startCreatingGroups(web, channelId), 2 * 60 * 60 * 1000);
+    });
+    cronJobs.push(cron)
+  }
+  res.redirect('/');
+});
+
+app.post('/cancel-cron', (req, res) => {
+  const cronJobOrder = req.body.cronJobOrder
+  const cron = cronJobs.splice(cronJobOrder, 1)[0]
+  cron.cancel()
+  res.redirect('/');
+})
 
 slackEvents.on('message', (event) => {
   console.log(`Received a message event: user ${event.user} in channel ${event.channel} says ${event.text}`);
@@ -50,7 +72,7 @@ slackEvents.on('app_mention', async (event) => {
       "text": `${message} <@${event.user}>`
     }
   );
-})
+});
 
 slackEvents.on('member_joined_channel', async (event) => {
   if (channelId === event.channel) {
@@ -66,7 +88,7 @@ slackEvents.on('member_joined_channel', async (event) => {
       }
     );
   }
-})
+});
 
 slackEvents.on('member_left_channel', async (event) => {
   if (channelId === event.channel) {
@@ -81,13 +103,11 @@ slackEvents.on('member_left_channel', async (event) => {
       }
     );
   }
-})
+});
 
 // Handle errors (see `errorCodes` export)
 slackEvents.on('error', console.error);
 
-app.use('/slack/events', slackEvents.expressMiddleware());
-
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+app.listen(port, () => console.log(`Lunchbot app listening on port ${port}!`));
 
 

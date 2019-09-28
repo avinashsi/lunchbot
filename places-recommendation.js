@@ -1,9 +1,9 @@
-const secrets = require('./secrets.json')
+const appConfig  =  require('./app-config')
 
 const commercetoolsBerlinOfficeLatLon = [52.4736144, 13.4578575]
 
 const googleMapsClient = require('@google/maps').createClient({
-  key: secrets.googleMapsKey,
+  key: appConfig.googleMapsKey,
   Promise: Promise
 });
 
@@ -26,11 +26,11 @@ async function getRestaurantsNearBy() {
       }
     })
   } catch (e) {
-    console.log(JSON.stringify(e))
+    console.log(JSON.stringify(e));
     return "No restaurants nearby.."
   }
 }
 
 module.exports = {
   getRestaurantsNearBy
-}
+};

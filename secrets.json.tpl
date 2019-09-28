@@ -1,4 +1,8 @@
 {
   "oAuthToken": "xxx",
-  "botUserOAuthTokenToken": "xxx"
+  "botUserOAuthTokenToken": "xxx",
+  "signingSecret": "xxx",
+  "googleMapsKey": "xxx",
+  "basicAuthUser": "xxx"
+  "basicAuthPassword": "xxx"
 }

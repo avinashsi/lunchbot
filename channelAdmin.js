@@ -2,16 +2,15 @@
 
 const fs = require('fs');
 const { WebClient } = require('@slack/web-api');
-console.log('Lunchbot started');
-const tokens = require('./secrets.json')
+const appConfig =  require('./app-config')
 
-const web = new WebClient(tokens.oAuthToken);
-async function createChannelAndNotify (newChannelName) {
+const web = new WebClient(appConfig.oAuthToken);
+async function createChannelAndNotify (channelNameToInform, newChannelName) {
 
     //archive channels
     console.log('archive channels');
     let channelList = await web.channels.list({
-        "token": tokens.botUserOAuthTokenToken,
+        "token": appConfig.botUserOAuthTokenToken,
         "exclude_archived": true
     })
     channelList.channels.forEach(function (channel) {
@@ -41,8 +40,8 @@ async function createChannelAndNotify (newChannelName) {
     console.log('Inform user');
     await web.chat.postMessage(
         {
-            "token": tokens.botUserOAuthTokenToken,
-            "channel": "lunch-muc",
+            "token": appConfig.botUserOAuthTokenToken,
+            "channel": channelNameToInform || "lunch-muc",
             "text": `Hola chicos and habibis <!here>, this Wednesday is lunch roulette day! Join <#${result.channel.id}> for a whole new lunch experience :all-the-things:!`
         }
     );
