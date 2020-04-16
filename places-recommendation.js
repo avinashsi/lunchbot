@@ -1,6 +1,6 @@
 const appConfig  =  require('./app-config')
 
-const commercetoolsBerlinOfficeLatLon = [52.4736144, 13.4578575]
+const commercetoolsBerlinOfficeLatLon = [lat, long]
 
 const googleMapsClient = require('@google/maps').createClient({
   key: appConfig.googleMapsKey,
